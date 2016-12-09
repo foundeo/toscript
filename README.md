@@ -4,7 +4,13 @@ Converts tag based CFML code into CFML Script.
 
 ## Usage
 
-Invoke the `toScript(`
+Invoke the `toScript(filePath="", options={}, fileContent="")` function. 
+
+### Options
+
+The `options` struct currently only supports one option `indentChars` which defaults to a tab character. You could pass `{indentChars="    "}` if you wanted to indent with 4 spaces instead of a tabs.
+
+### Example
 
 	converter = new ToScript();
 	result = converter.toScript(filePath="someFile.cfc");

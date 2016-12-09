@@ -1,0 +1,32 @@
+{
+    "name":"toscript",
+    "version":"1.0.0",
+    "author":"Pete Freitag / Foundeo Inc.",
+    "slug":"toscript",
+    "shortDescription":"Converts CFML tag to CFScript.",
+    "private":false,
+    "engines":[
+        {
+            "type":"lucee",
+            "version":">=4.5.x"
+        },
+        {
+            "type":"adobe",
+            "version":">=10.0.0"
+        }
+    ],
+    "devDependencies":{
+        "testbox":"2.4.0"
+    },
+    "dependencies":{
+        "cfmlparser":"git://github.com/foundeo/cfmlparser.git"
+    },
+    "installPaths":{
+        "testbox":"tests/testbox",
+        "cfmlparser":"cfmlparser"
+    },
+    "ignore":[
+        "**/.*",
+        "tests"
+    ]
+}

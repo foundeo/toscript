@@ -6,7 +6,7 @@ component {
 	}
 
 	public string function toScript(tag) {
-		if (listFindNoCase("cfcontent,cfcookie,cfheader,cfdbinfo,cfdirectory,cfexecute,cffeed,cffile,cffileupload,cfflush,cfftp,cfimage,cfldap,cflog,cfparam,cfpop,cfprint,cfquery,cfqueryparam,cfhttp,cfhttpparam", tag.getName())) {
+		if (listFindNoCase("cfcontent,cfcookie,cfheader,cfdbinfo,cfdirectory,cfexecute,cffeed,cffile,cffileupload,cfflush,cfftp,cfimage,cfldap,cflog,cfparam,cfpop,cfprint,cfquery,cfqueryparam,cfhttp,cfhttpparam,cfoutput", tag.getName())) {
 			//do generic CF11+ conversion
 			return toScriptGeneric(tag);
 		}

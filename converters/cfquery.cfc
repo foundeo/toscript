@@ -1,7 +1,7 @@
 component extends="BaseConverter" {
 	
 	public string function toScript(tag) {
-		return reReplace(toScriptGeneric(tag), "\);$", ") {");
+		return reReplace(toScriptGeneric(tag), "\);$", ") { //Note: queryExecute() is the preferred syntax but this syntax is easier to convert generically");
 	}
 		
 	public boolean function indentBody() {

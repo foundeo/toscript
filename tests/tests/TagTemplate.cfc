@@ -159,7 +159,8 @@
 	<cffunction name="syntaxChecks" access="private">
 		<cfabort>
 		<cflocation url="/" addtoken="false">
-
+		<cfinclude template="functions.cfm">
+		<cfdump var="#variables#">
 	</cffunction>
 
 

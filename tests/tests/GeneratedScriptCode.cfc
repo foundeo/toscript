@@ -39,7 +39,7 @@ component extends="testbox.system.BaseSpec" {
 		var rows = [ {"id":1,"title":"Dewey defeats Truman"}, {"id":2,"title":"Man walks on Moon"} ];
 		var news = news = queryNew("id,title", "integer,varchar", rows);
 		$assert.isEqual(arrayLen(rows), news.recordcount);
-		cfquery( dbtype="query", name="local.result" ) {
+		cfquery( dbtype="query", name="local.result" ) { //Note: queryExecute() is the preferred syntax but this syntax is easier to convert generically
 
 			writeOutput("SELECT id, title
 			FROM news
@@ -156,6 +156,8 @@ component extends="testbox.system.BaseSpec" {
 	private function syntaxChecks() {
 		abort;
 		location( "/", false );
+		include "functions.cfm";
+		writeDump( var=variables );
 	}
 
 }

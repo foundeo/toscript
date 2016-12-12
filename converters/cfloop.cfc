@@ -9,7 +9,18 @@ component extends="BaseConverter" {
 		if (structKeyExists(attr, "condition")) {
 			s = "while ( " & trim(convertOperators(tag.getAttributeContent())) & " ) {";	
 		} else if (structKeyExists(attr, "array")) {
-			s = "for ( " & attr.index & " in " & unPound(attr.array) & " ) {";
+			if (structKeyExists(attr, "index") && !structKeyExists(attr, "item")) {
+				//standard cfloop syntax cf8+
+				s = "for ( " & attr.index & " in " & unPound(attr.array) & " ) {";	
+			} else if (structKeyExists(attr, "item") && !structKeyExists(attr, "index")) {
+				//ACF2016+ or Lucee support using item
+				s = "for ( " & attr.item & " in " & unPound(attr.array) & " ) {";
+			} else if (structKeyExists(attr, "item") && structKeyExists(attr, "index")) {
+				//ACF2016+ or Lucee support using item and index
+				s = attr.index & "=0; for ( " & attr.item & " in " & unPound(attr.array) & " ) { " & attr.index & "++;";
+			} else {
+				throw(message="cfloop array must have index or item arguments.");
+			}
 		} else if (structKeyExists(attr, "list") && structKeyExists(attr, "item")) {
 			s = "for ( " & attr.item & " in ";
 			if (structKeyExists(attr, "delimiters")) {
@@ -18,6 +29,8 @@ component extends="BaseConverter" {
 				s = s & unPound(attr.list);
 			}
 			s = s & " ) {"; 
+		} else if (structKeyExists(attr, "collection") && structKeyExists(attr, "item")) {
+			s = "for ( " & attr.item & " in " & unPound(attr.collection) & " ) {";
 		} else if (structKeyExists(attr, "from") && structKeyExists(attr, "to") && structKeyExists(attr, "index")) {
 			s = "for ( " & attr.index & "=" & unPound(attr.from) & " ; " & attr.index & "<=" & unPound(attr.to) & " ; " & attr.index;
 			if (structKeyExists(attr, "step") && attr.step != 1) {

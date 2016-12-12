@@ -78,6 +78,7 @@
 			<cfset i = i+1>
 			<cfset $assert.isEqual(f, listGetAt(list, i))>
 		</cfloop>
+		<cfset $assert.isEqual(i, listLen(list))>
 	</cffunction>
 
 	<cffunction name="testLoopListDelimiters">
@@ -88,6 +89,63 @@
 			<cfset i = i+1>
 			<cfset $assert.isEqual(f, listGetAt(list, i, ";"))>
 		</cfloop>
+		<cfset $assert.isEqual(i, listLen(list, ";"))>
+	</cffunction>
+
+	<cffunction name="testLoopArray">
+		<cfset var a = ["Apple","Orange","Watermellon"]>
+		<cfset var f = "">
+		<cfset var i = 0>
+		<cfloop array="#a#" index="f">
+			<cfset i = i+1>
+			<cfset $assert.isEqual(f, a[i])>
+		</cfloop>
+		<cfset $assert.isEqual(i, arrayLen(a))>
+	</cffunction>
+
+	<cffunction name="testLoopArrayItem">
+		<cfset var a = ["Apple","Orange","Watermellon"]>
+		<cfset var f = "">
+		<cfset var i = 0>
+		<cfif structKeyExists(server, "lucee") OR listFirst(server.coldfusion.productversion) GTE 2016>
+			<cfloop array="#a#" index="f">
+				<cfset i = i+1>
+				<cfset $assert.isEqual(f, a[i])>
+			</cfloop>
+			<cfset $assert.isEqual(i, arrayLen(a))>
+		</cfif>
+	</cffunction>
+
+	<cffunction name="testLoopArrayItemAndIndex">
+		<cfset var a = ["Apple","Orange","Watermellon"]>
+		<cfset var f = "">
+		<cfset var i = 0>
+		<cfif structKeyExists(server, "lucee") OR listFirst(server.coldfusion.productversion) GTE 2016>
+			<cfloop array="#a#" index="i" item="f">
+				<cfset $assert.isEqual(f, a[i])>
+			</cfloop>
+			<cfset $assert.isEqual(i, arrayLen(a))>
+		</cfif>
+	</cffunction>
+
+	<cffunction name="testLoopCollection">
+		<cfset var st = {"Apple"=1,"Orange"=2,"Watermellon"=3}>
+		<cfset var f = "">
+		<cfset var i = 0>
+		<cfloop collection="#st#" item="f">
+			<cfif f IS "Apple">
+				<cfset $assert.isEqual(st[f], 1)>
+			<cfelseif f IS "Orange">
+				<cfset $assert.isEqual(st[f], 2)>
+			<cfelseif f IS "Watermellon">
+				<cfset $assert.isEqual(st[f], 3)>
+			<cfelse>
+				<!--- should not reach this --->
+				<cfset $assert.isEqual(st[f], -1)>
+			</cfif>
+			<cfset i = i + 1>
+		</cfloop>
+		<cfset $assert.isEqual(structCount(st), i)>
 	</cffunction>
 
 	<cffunction name="testTryCatch">

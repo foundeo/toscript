@@ -88,6 +88,7 @@ component {
 							lineBreak(sb);
 							//jump to end of tag end
 							i = s.getEndPosition();
+							continue;
 						}
 						
 						if (converter.indentBody()) {

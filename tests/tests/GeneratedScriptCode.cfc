@@ -81,6 +81,7 @@ component extends="testbox.system.BaseSpec" {
 			i = i+1;
 			$assert.isEqual(f, listGetAt(list, i));
 		}
+		$assert.isEqual(i, listLen(list));
 	}
 
 	public function testLoopListDelimiters() {
@@ -91,6 +92,63 @@ component extends="testbox.system.BaseSpec" {
 			i = i+1;
 			$assert.isEqual(f, listGetAt(list, i, ";"));
 		}
+		$assert.isEqual(i, listLen(list, ";"));
+	}
+
+	public function testLoopArray() {
+		var a = ["Apple","Orange","Watermellon"];
+		var f = "";
+		var i = 0;
+		for ( f in a ) {
+			i = i+1;
+			$assert.isEqual(f, a[i]);
+		}
+		$assert.isEqual(i, arrayLen(a));
+	}
+
+	public function testLoopArrayItem() {
+		var a = ["Apple","Orange","Watermellon"];
+		var f = "";
+		var i = 0;
+		if ( structKeyExists(server, "lucee") || listFirst(server.coldfusion.productversion) >= 2016 ) {
+			for ( f in a ) {
+				i = i+1;
+				$assert.isEqual(f, a[i]);
+			}
+			$assert.isEqual(i, arrayLen(a));
+		}
+	}
+
+	public function testLoopArrayItemAndIndex() {
+		var a = ["Apple","Orange","Watermellon"];
+		var f = "";
+		var i = 0;
+		if ( structKeyExists(server, "lucee") || listFirst(server.coldfusion.productversion) >= 2016 ) {
+			i=0; for ( f in a ) { i++;
+				$assert.isEqual(f, a[i]);
+			}
+			$assert.isEqual(i, arrayLen(a));
+		}
+	}
+
+	public function testLoopCollection() {
+		var st = {"Apple"=1,"Orange"=2,"Watermellon"=3};
+		var f = "";
+		var i = 0;
+		for ( f in st ) {
+			if ( f == "Apple" ) {
+				$assert.isEqual(st[f], 1);
+			} else if ( f == "Orange" ) {
+				$assert.isEqual(st[f], 2);
+			} else if ( f == "Watermellon" ) {
+				$assert.isEqual(st[f], 3);
+			} else {
+				//  should not reach this 
+				$assert.isEqual(st[f], -1);
+			}
+			i = i + 1;
+		}
+		$assert.isEqual(structCount(st), i);
 	}
 
 	public function testTryCatch() {

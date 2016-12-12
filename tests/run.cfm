@@ -25,12 +25,17 @@
 <cfset converter = new toscript.ToScript()>
 <cftry>
 	<cfset scr = converter.toScript(filePath=ExpandPath("tests/TagTemplate.cfc"))>
-	
+
 	<cfset fileWrite(ExpandPath("tests/GeneratedScriptCode.cfc"), scr.code)>
 	
 	<cfcatch type="any">
 		<cfheader statuscode="500" statustext="Script Conversion Failed">
-		<cfoutput>#encodeForHTML(cfcatch.message)# -- #encodeForHTML(cfcatch.detail)#</cfoutput>
+
+		<cfoutput>Script Conversion Issue: #encodeForHTML(cfcatch.message)# -- #encodeForHTML(cfcatch.detail)#</cfoutput>
+		<cfif NOT plainText>
+			<cfdump var="#cfcatch#" label="Error Details">
+		</cfif>
+		<cfabort>
 	</cfcatch>
 </cftry>
 

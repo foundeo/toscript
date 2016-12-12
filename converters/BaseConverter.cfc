@@ -65,4 +65,16 @@ component {
 		return s & " );";
 	}
 
+	public string function getIndentChars() {
+		if (structKeyExists(variables.options, "indentChars")) {
+			return variables.options.indentChars;
+		} else {
+			return Chr(9);
+		}
+	}
+
+	public string function getLineBreak() {
+		return Chr(13) & Chr(10);
+	}
+
 }

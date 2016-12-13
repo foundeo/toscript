@@ -158,6 +158,20 @@ component extends="testbox.system.BaseSpec" {
 			$assert.isTrue(true);
 		}
 	}
+	/*  
+		Known issue in lucee: https://luceeserver.atlassian.net/browse/
+		Throws a compiler error
+	<cffunction name="testCFInvoke">
+		<cfset var answer = 0>
+		<cfif NOT structKeyExists(server, "lucee")>
+			<cfinvoke webservice="http://soaptest.parasoft.com/calculator.wsdl" method="add" returnvariable="answer">
+			    <cfinvokeargument name="x" value="2">
+			    <cfinvokeargument name="y" value="3">
+			</cfinvoke>
+			<cfset $assert.isEqual(answer, 5)>
+		</cfif>
+	</cffunction>
+	*/
 
 	public function testTryCatchFinally() {
 		finallyRan = false;

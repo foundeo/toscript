@@ -17,7 +17,7 @@ component {
 		return "";
 	}
 
-	public boolean function indentBody() {
+	public boolean function indentBody(tag) {
 		return false;
 	}
 

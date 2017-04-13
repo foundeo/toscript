@@ -91,7 +91,7 @@ component {
 							continue;
 						}
 						
-						if (converter.indentBody()) {
+						if (converter.indentBody(s)) {
 							increaseIndent();
 						}
 						i = s.getStartTagEndPosition();

@@ -4,7 +4,7 @@ component extends="BaseConverter" {
 		return "try {";
 	}
 
-	public boolean function indentBody() {
+	public boolean function indentBody(tag) {
 		return true;
 	}
 	

@@ -46,7 +46,7 @@ component extends="BaseConverter" {
 		return s;
 	}
 
-	public boolean function indentBody() {
+	public boolean function indentBody(tag) {
 		return true;
 	}
 

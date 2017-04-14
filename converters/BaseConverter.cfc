@@ -41,6 +41,11 @@ component {
 			return mid(arguments.str, 2, len(arguments.str)-2);
 		} else if (isNumeric(str)) {
 			return arguments.str;
+		} else if (str == "yes") {
+			return "true";
+		} else if (str == "no") {
+			return "false";
+		}
 		} else if (str == "true" || str == "false") {
 			return arguments.str;
 		}

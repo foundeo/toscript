@@ -45,7 +45,6 @@ component {
 			return "true";
 		} else if (str == "no") {
 			return "false";
-		}
 		} else if (str == "true" || str == "false") {
 			return arguments.str;
 		}

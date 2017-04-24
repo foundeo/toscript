@@ -29,6 +29,14 @@ component extends="BaseConverter" {
 				s = s & unPound(attr.list);
 			}
 			s = s & " ) {"; 
+		} else if (structKeyExists(attr, "list") && structKeyExists(attr, "index")) {
+			s = "for ( " & attr.index & " in ";
+			if (structKeyExists(attr, "delimiters")) {
+				s = s & "listToArray( " & unPound(attr.list) & ", " & unPound(attr.delimiters) & " )";
+			} else {
+				s = s & unPound(attr.list);
+			}
+			s = s & " ) {"; 	
 		} else if (structKeyExists(attr, "collection") && structKeyExists(attr, "item")) {
 			s = "for ( " & attr.item & " in " & unPound(attr.collection) & " ) {";
 		} else if (structKeyExists(attr, "from") && structKeyExists(attr, "to") && structKeyExists(attr, "index")) {

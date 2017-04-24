@@ -6,7 +6,7 @@ component {
 	}
 
 	public string function toScript(tag) {
-		if (listFindNoCase("cfcontent,cfcookie,cfheader,cfdbinfo,cfdirectory,cfexecute,cffeed,cffile,cffileupload,cfflush,cfftp,cfimage,cfldap,cflog,cfparam,cfpop,cfprint,cfquery,cfqueryparam,cfhttp,cfhttpparam,cfoutput,cfinvokeargument,cfsetting,cfprocessingdirective", tag.getName())) {
+		if (listFindNoCase("cfcontent,cfcookie,cfheader,cfdbinfo,cfdirectory,cfexecute,cffeed,cffile,cffileupload,cfflush,cfftp,cfimage,cfldap,cflog,cfparam,cfpop,cfprint,cfquery,cfqueryparam,cfprocparam,cfhttp,cfhttpparam,cfoutput,cfinvokeargument,cfsetting,cfprocessingdirective", tag.getName())) {
 			//do generic CF11+ conversion
 			return toScriptGeneric(tag);
 		}
@@ -17,7 +17,7 @@ component {
 		return "";
 	}
 
-	public boolean function indentBody() {
+	public boolean function indentBody(tag) {
 		return false;
 	}
 
@@ -41,6 +41,10 @@ component {
 			return mid(arguments.str, 2, len(arguments.str)-2);
 		} else if (isNumeric(str)) {
 			return arguments.str;
+		} else if (str == "yes") {
+			return "true";
+		} else if (str == "no") {
+			return "false";
 		} else if (str == "true" || str == "false") {
 			return arguments.str;
 		}

@@ -185,12 +185,6 @@ component extends="testbox.system.BaseSpec" {
 		$assert.isTrue(finallyRan);
 	}
 
-	public function testCFHTTP() {
-		var httpResult = "";
-		cfhttp( url="http://httpbin.org/status/200", timeout=10, result="httpResult" );
-		$assert.includes(httpResult.statusCode,"200");
-	}
-
 	public function testBreak() {
 		var i = 0;
 		for ( i=1 ; i<=10 ; i++ ) {
@@ -230,6 +224,28 @@ component extends="testbox.system.BaseSpec" {
 		location( "/", false );
 		include "functions.cfm";
 		writeDump( var=variables );
+	}
+
+	public function testCFHTTPWithParams() {
+		var httpResult = "";
+		cfhttp( url="https://httpbin.org/headers", timeout=3, result="httpResult", method="GET" ) {
+			cfhttpparam( name="X-Cow-Says", type="header", value="MOO" );
+		}
+		$assert.isTrue(isJSON(httpResult.fileContent), "HTTP Result should be JSON");
+		local.resultHeaders = deserializeJSON(httpResult.fileContent);
+		debug(local.resultHeaders);
+		$assert.key(local.resultHeaders.headers, "X-Cow-Says", "Should return X-Cow-Says header");
+		$assert.isEqual(local.resultHeaders.headers["X-Cow-Says"], "MOO", "Cow says MOO!");
+	}
+
+	public function testCFHTTPWithoutParams() {
+		var httpResult = "";
+		var userAgent = "Test: " & createUUID();
+		cfhttp( useragent=userAgent, url="https://httpbin.org/user-agent", timeout=3, result="httpResult", method="GET" );
+		$assert.isTrue(isJSON(httpResult.fileContent), "HTTP Result should be JSON");
+		local.resultData = deserializeJSON(httpResult.fileContent);
+		$assert.key(local.resultData, "user-agent", "Should return user-agent");
+		$assert.isEqual(local.resultData["user-agent"], userAgent);
 	}
 
 }

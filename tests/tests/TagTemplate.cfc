@@ -186,11 +186,7 @@
 		<cfset $assert.isTrue(finallyRan)>
 	</cffunction>
 
-	<cffunction name="testCFHTTP">
-		<cfset var httpResult = "">
-		<cfhttp url="http://httpbin.org/status/200" result="httpResult" timeout="10">
-		<cfset $assert.includes(httpResult.statusCode,"200")>
-	</cffunction>
+	
 
 	<cffunction name="testBreak">
 		<cfset var i = 0>
@@ -234,6 +230,28 @@
 		<cflocation url="/" addtoken="false">
 		<cfinclude template="functions.cfm">
 		<cfdump var="#variables#">
+	</cffunction>
+
+	<cffunction name="testCFHTTPWithParams">
+		<cfset var httpResult = "">
+		<cfhttp url="https://httpbin.org/headers" method="GET" timeout="3" result="httpResult">
+			<cfhttpparam type="header" name="X-Cow-Says" value="MOO">
+		</cfhttp>
+		<cfset $assert.isTrue(isJSON(httpResult.fileContent), "HTTP Result should be JSON")>
+		<cfset local.resultHeaders = deserializeJSON(httpResult.fileContent)>
+		<cfset debug(local.resultHeaders)>
+		<cfset $assert.key(local.resultHeaders.headers, "X-Cow-Says", "Should return X-Cow-Says header")>
+		<cfset $assert.isEqual(local.resultHeaders.headers["X-Cow-Says"], "MOO", "Cow says MOO!")>
+	</cffunction>
+
+	<cffunction name="testCFHTTPWithoutParams">
+		<cfset var httpResult = "">
+		<cfset var userAgent = "Test: " & createUUID()> 
+		<cfhttp url="https://httpbin.org/user-agent" method="GET" useragent="#userAgent#" timeout="3" result="httpResult">
+		<cfset $assert.isTrue(isJSON(httpResult.fileContent), "HTTP Result should be JSON")>
+		<cfset local.resultData = deserializeJSON(httpResult.fileContent)>
+		<cfset $assert.key(local.resultData, "user-agent", "Should return user-agent")>
+		<cfset $assert.isEqual(local.resultData["user-agent"], userAgent)>
 	</cffunction>
 
 

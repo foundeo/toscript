@@ -13,8 +13,14 @@ component {
 		var i = 0;
 		var code = "";
 		var handledChar = false;
-		var result = {"code":"","errors":[]};
+		var result = {"code":"","errors":[], "converted":false};
 		structAppend(variables.options, arguments.options, true);
+		if (codeFile.isScript()) {
+			//already CFML script
+			result.code = codeFile.getFileContent();
+			result.converted = false;
+			return result;
+		}
 		for (i=1;i<=codeFile.getFileLength();i++) {
 			handledChar = false;
 			for (s in statements) {
@@ -132,6 +138,7 @@ component {
 				}
 			}
 		}
+		result.converted = true;
 		result.code = sb.toString();
 		return result;
 	}

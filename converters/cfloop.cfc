@@ -48,7 +48,7 @@ component extends="BaseConverter" {
 			}
 			s = s & " ) {";
 		} else {
-			throw(message="Unimplemented cfloop condition");
+			throw(message="Unimplemented cfloop condition: #tag.getAttributeContent()# ");
 		}
 		
 		return s;

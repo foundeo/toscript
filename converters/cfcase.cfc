@@ -4,7 +4,8 @@ component extends="BaseConverter" {
 		var s = "case ";
 		var attr = tag.getAttributes();
 		if (!tag.hasAttributes() || !structKeyExists(attr, "value")) {
-			throw(message="cfcase must have value");
+			local.line = tag.getFile().getLineNumber(tag.getStartPosition());
+			throw(message="cfcase must have value [line #local.line#] #tag.getAttributeContent()#");
 		}
 		s = s & " " & trim(unPound(attr.value)) & ":";
 		return s;

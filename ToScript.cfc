@@ -1,6 +1,6 @@
 component {
 	variables.indentLevel = 0;
-	variables.options = {indentChars=Chr(9)};
+	variables.options = {indentChars=Chr(9),cleanTypes=true};
 
 	public struct function toScript(filePath="", options={}, fileContent="") {
 		var codeFile = new cfmlparser.File(filePath=filePath,fileContent=fileContent);

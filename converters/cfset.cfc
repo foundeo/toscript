@@ -1,6 +1,7 @@
 component extends="BaseConverter" {
 
 	public string function toScript(tag) {
-		return trim(convertOperators(tag.getAttributeContent(stripTrailingSlash=true))) & ";"; 
+		var i = variables.toscript.getIdentLevel();
+		return reReplace( trim(convertOperators(tag.getAttributeContent(stripTrailingSlash=true))) & ";", "\n\t", chr(10) & repeatString( variables.options.indentChars, i ), "all" ); 
 	}
 }

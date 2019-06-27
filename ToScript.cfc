@@ -1,6 +1,6 @@
 component {
 	variables.indentLevel = 0;
-	variables.options = {indentChars=Chr(9)};
+	variables.options = {indentChars=Chr(9),cleanTypes=true};
 
 	public struct function toScript(filePath="", options={}, fileContent="") {
 		var codeFile = new cfmlparser.File(filePath=filePath,fileContent=fileContent);
@@ -146,15 +146,19 @@ component {
 	public function getTagConverter(tagName) {
 		var converter = "";
 		try {
-			converter = createObject("component", "converters." & trim(lCase(tagName))).init(options);
+			converter = createObject("component", "converters." & trim(lCase(tagName))).init(options,this);
 		} catch(any e) {
 			if (e.type == "Template") {
 				//due to compiler error of the CFC
 				rethrow;	
 			}
-			converter = createObject("component", "converters.BaseConverter").init(options);
+			converter = createObject("component", "converters.BaseConverter").init(options,this);
 		}
 		return converter;
+	}
+
+	public function getIdentLevel() {
+		return variables.indentLevel;
 	}
 
 	private function lineBreak(sb) {

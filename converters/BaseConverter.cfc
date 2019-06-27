@@ -1,12 +1,13 @@
 component {
 	variables.options = {};
-	public function init(options) {
+	public function init(options,toscript) {
 		variables.options = arguments.options;
+		variables.toscript = arguments.toscript;
 		return this;
 	}
 
 	public string function toScript(tag) {
-		if (listFindNoCase("cfcontent,cfcookie,cfheader,cfdbinfo,cfdirectory,cfexecute,cffeed,cffile,cffileupload,cfflush,cfftp,cfimage,cfldap,cflog,cfparam,cfpop,cfprint,cfquery,cfqueryparam,cfprocparam,cfhttp,cfhttpparam,cfoutput,cfinvokeargument,cfsetting,cfprocessingdirective,cfmailparam,cflogout,cfloginuser", tag.getName())) {
+		if (listFindNoCase("cfcontent,cfcookie,cfheader,cfdbinfo,cfdirectory,cfexecute,cffeed,cffile,cffileupload,cfflush,cfftp,cfimage,cfldap,cflog,cfparam,cfpop,cfprint,cfquery,cfqueryparam,cfprocparam,cfhttp,cfhttpparam,cfoutput,cfinvokeargument,cfsetting,cfprocessingdirective,cfmailparam,cflogout,cfloginuser,cftimer,cftrace,cfthread", tag.getName())) {
 			//do generic CF11+ conversion
 			return toScriptGeneric(tag);
 		}

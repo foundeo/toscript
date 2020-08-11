@@ -19,7 +19,7 @@ To see an example of how it works look at the unit tests. It converts a Tag Base
 
 	converter = new ToScript();
 	result = converter.toScript(filePath="someFile.cfc");
-	fileWrite("result.cfc", result.src);
+	fileWrite("result.cfc", result.code);
 
 ## Generated CFML Script
 

@@ -40,7 +40,9 @@ component extends="BaseConverter" {
 			s = s & "public ";
 		}
 		if (structKeyExists(attr, "returntype")) {
-			s = s & attr.returntype & " ";
+			if( !variables.options.cleanTypes || ( attr.returntype != "VOID" && attr.returntype != "any" ) ) {
+				s = s & attr.returntype & " ";
+			}
 		}
 		s = s & "function " & attr.name & "(";
 
@@ -56,7 +58,9 @@ component extends="BaseConverter" {
 					s = s & "required ";
 				}
 				if (structKeyExists(childAttr, "type")) {
-					s = s & childAttr.type & " ";
+					if( !variables.options.cleanTypes || ( childAttr.type != "VOID" && childAttr.type != "any" ) ) {
+						s = s & childAttr.type & " ";
+					}
 				}
 				s = s & childAttr.name;
 				if (structKeyExists(childAttr, "default")) {

@@ -79,7 +79,7 @@ component extends="BaseConverter" {
 		s = s & " {";
 		// close and prepend javadocs, if any
 		if (len(javaDocs)) {
-			javaDocs = javaDocs & "/" & getLineBreak() & getIndentChars();
+			javaDocs = javaDocs & endJavaDocs() & getIndentChars();
 			s = javaDocs & s;
 		}
 		return s;

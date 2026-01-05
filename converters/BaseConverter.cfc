@@ -89,4 +89,8 @@ component {
 		return getLineBreak() & getIndentChars() & " *";
 	}
 
+	public string function endJavaDocs() {
+		return "/" & getLineBreak();
+	}
+
 }

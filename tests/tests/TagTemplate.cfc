@@ -216,8 +216,8 @@
 	</cffunction>
 
 	<cffunction name="add" access="private" returntype="numeric">
-		<cfargument name="a" default="5" type="numeric">
-		<cfargument name="b" default="3" type="numeric">
+		<cfargument name="a" default="5" type="numeric" hint="First number to add">
+		<cfargument name="b" default="3" type="numeric" hint="Second number to add">
 		<cfreturn arguments.a + arguments.b>
 	</cffunction>
 

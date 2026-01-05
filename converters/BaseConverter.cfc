@@ -81,4 +81,12 @@ component {
 		return Chr(13) & Chr(10);
 	}
 
+	public string function startJavaDocs() {
+		return "/" & "**" & getJavaDocsNewLine();
+	}
+
+	public string function getJavaDocsNewLine() {
+		return getLineBreak() & getIndentChars() & " *";
+	}
+
 }

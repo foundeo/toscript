@@ -85,14 +85,6 @@ component extends="BaseConverter" {
 		return s;
 	}
 
-	private string function startJavaDocs() {
-		return "/" & "**" & getJavaDocsNewLine();
-	}
-
-	private string function getJavaDocsNewLine() {
-		return getLineBreak() & getIndentChars() & " *";
-	}
-
 	public boolean function indentBody(tag) {
 		return true;
 	}

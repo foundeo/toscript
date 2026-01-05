@@ -81,16 +81,28 @@ component {
 		return Chr(13) & Chr(10);
 	}
 
-	public string function startJavaDocs() {
-		return "/" & "**" & getJavaDocsNewLine();
+	public string function startJavaDocs(boolean indent = false) {
+		return "/" & "**" & getJavaDocsNewLine(arguments.indent);
 	}
 
-	public string function getJavaDocsNewLine() {
-		return getLineBreak() & getIndentChars() & " *";
+	public string function getJavaDocsNewLine(boolean indent = false) {
+		var newLine = getLineBreak();
+
+		if (arguments.indent) {
+			newLine &= getIndentChars();
+		}
+
+		return newLine & " *";
 	}
 
-	public string function endJavaDocs() {
-		return "/" & getLineBreak();
+	public string function endJavaDocs(boolean indent = false) {
+		var ending = "/" & getLineBreak();
+
+		if (arguments.indent) {
+			ending &= getIndentChars();
+		}
+
+		return ending;
 	}
 
 }

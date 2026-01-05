@@ -16,7 +16,7 @@ component extends="BaseConverter" {
 		}
 		// build javadocs to prepend later
 		if (structKeyExists(attr, "hint")) {
-			javaDocs = "/" & "**" & getLineBreak() & getIndentChars() & " * " & attr.hint & getLineBreak() & getIndentChars() & " *";
+			javaDocs = startJavaDocs() & " " & attr.hint & getJavaDocsNewLine();
 		}
 		for (a in attr) {
 			if (listFindNoCase(additionalArgs, a)) {
@@ -27,10 +27,9 @@ component extends="BaseConverter" {
 				continue;
 			} else {
 				if (len(javaDocs) == 0) {
-					/* */
-					javaDocs = "/" & "**" & getLineBreak() & getIndentChars() & " *";
+					javaDocs = startJavaDocs();
 				}
-				javaDocs = javaDocs & " @" & a & " " & attr[a] & getLineBreak() & getIndentChars() & " *";
+				javaDocs = javaDocs & " @" & a & " " & attr[a] & getJavaDocsNewLine();
 			}
 		}
 		if (structKeyExists(attr, "access")) {
@@ -63,7 +62,10 @@ component extends="BaseConverter" {
 				}
 				// add hint to javaDocs
 				if (structKeyExists(childAttr, "hint")) {
-					javaDocs = javaDocs & " @" & childAttr.name & " " & childAttr.hint & getLineBreak() & getIndentChars() & " *";
+					if (len(javaDocs) == 0) {
+						javaDocs = startJavaDocs();
+					}
+					javaDocs = javaDocs & " @" & childAttr.name & " " & childAttr.hint & getJavaDocsNewLine();
 				}
 			}
 		}
@@ -81,6 +83,14 @@ component extends="BaseConverter" {
 			s = javaDocs & s;
 		}
 		return s;
+	}
+
+	private string function startJavaDocs() {
+		return "/" & "**" & getJavaDocsNewLine();
+	}
+
+	private string function getJavaDocsNewLine() {
+		return getLineBreak() & getIndentChars() & " *";
 	}
 
 	public boolean function indentBody(tag) {

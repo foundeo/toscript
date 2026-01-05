@@ -211,6 +211,10 @@ component extends="testbox.system.BaseSpec" {
 		$assert.isEqual(add(6,1), 7, "Testing unnamed arguments");
 	}
 
+	/**
+	 * @a First number to add
+	 * @b Second number to add
+	 */
 	private numeric function add(numeric a="5", numeric b="3") {
 		return arguments.a + arguments.b;
 	}

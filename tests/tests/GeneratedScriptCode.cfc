@@ -4,7 +4,10 @@
 
 	This test will require CF11+ or Lucee 4.5+
 */
-component extends="testbox.system.BaseSpec" {
+/**
+ * Template for testing Tag to Script conversion
+ */
+component extends="testbox.system.BaseSpec" hint="Template for testing Tag to Script conversion" {
 	property name="testProperty" default="Bacon";
 
 	public function testFunction() {
@@ -205,6 +208,9 @@ component extends="testbox.system.BaseSpec" {
 		}
 	}
 
+	/**
+	 * Test function arguments with defaults, named and unnamed
+	 */
 	public function testArguments() {
 		$assert.isEqual(add(), 8, "Testing arg defaults");
 		$assert.isEqual(add(a=3, b=2), 5, "Testing named arguments");

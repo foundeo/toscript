@@ -1,6 +1,6 @@
 # toScript()
 
-[![Build Status](https://travis-ci.org/foundeo/toscript.svg?branch=master)](https://travis-ci.org/foundeo/toscript)
+[![CI](https://github.com/foundeo/toscript/actions/workflows/ci.yml/badge.svg)](https://github.com/foundeo/toscript/actions/workflows/ci.yml)
 
 Converts tag based CFML code into CFML Script.
 

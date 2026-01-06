@@ -4,7 +4,7 @@
 
 	This test will require CF11+ or Lucee 4.5+
 --->
-<cfcomponent extends="testbox.system.BaseSpec">
+<cfcomponent extends="testbox.system.BaseSpec" hint="Template for testing Tag to Script conversion">
 			
 	<cfproperty name="testProperty" default="Bacon">
 
@@ -209,15 +209,15 @@
 		
 	</cffunction>
 
-	<cffunction name="testArguments">
+	<cffunction name="testArguments" hint="Test function arguments with defaults, named and unnamed">
 		<cfset $assert.isEqual(add(), 8, "Testing arg defaults")>
 		<cfset $assert.isEqual(add(a=3, b=2), 5, "Testing named arguments")>
 		<cfset $assert.isEqual(add(6,1), 7, "Testing unnamed arguments")>
 	</cffunction>
 
 	<cffunction name="add" access="private" returntype="numeric">
-		<cfargument name="a" default="5" type="numeric">
-		<cfargument name="b" default="3" type="numeric">
+		<cfargument name="a" default="5" type="numeric" hint="First number to add">
+		<cfargument name="b" default="3" type="numeric" hint="Second number to add">
 		<cfreturn arguments.a + arguments.b>
 	</cffunction>
 

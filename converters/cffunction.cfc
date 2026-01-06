@@ -2,6 +2,7 @@ component extends="BaseConverter" {
 	
 	public string function toScript(tag) {
 		var s = "";
+		var javaDocs = "";
 		var attr = tag.getAttributes();
 		var childAttr = "";
 		var children = tag.getChildren();
@@ -13,8 +14,9 @@ component extends="BaseConverter" {
 		if (!tag.hasAttributes()) {
 			throw(message="cffunction must have attributes");
 		}
+		// build javadocs to prepend later
 		if (structKeyExists(attr, "hint")) {
-			s = "/" & "**" & getLineBreak() & getIndentChars() & " * " & attr.hint & getLineBreak() & getIndentChars() & " *";
+			javaDocs = startJavaDocs(indent = true) & " " & attr.hint & getJavaDocsNewLine(indent = true);
 		}
 		for (a in attr) {
 			if (listFindNoCase(additionalArgs, a)) {
@@ -24,15 +26,11 @@ component extends="BaseConverter" {
 				//ignore these they go elsewhere
 				continue;
 			} else {
-				if (len(s) == 0) {
-					/* */
-					s = "/" & "**" & getLineBreak() & getIndentChars() & " *";
+				if (len(javaDocs) == 0) {
+					javaDocs = startJavaDocs(indent = true);
 				}
-				s = s & " @" & a & " " & attr[a] & getLineBreak() & getIndentChars() & " *";
+				javaDocs = javaDocs & " @" & a & " " & attr[a] & getJavaDocsNewLine(indent = true);
 			}
-		}
-		if (len(s)) {
-			s = s & "/" & getLineBreak() & getIndentChars();
 		}
 		if (structKeyExists(attr, "access")) {
 			s = s & attr.access & " ";
@@ -62,7 +60,13 @@ component extends="BaseConverter" {
 				if (structKeyExists(childAttr, "default")) {
 					s = s & "=""" & childAttr.default & """"; 
 				}
-				
+				// add hint to javaDocs
+				if (structKeyExists(childAttr, "hint")) {
+					if (len(javaDocs) == 0) {
+						javaDocs = startJavaDocs(indent = true);
+					}
+					javaDocs = javaDocs & " @" & childAttr.name & " " & childAttr.hint & getJavaDocsNewLine(indent = true);
+				}
 			}
 		}
 		s = s & ")";
@@ -72,8 +76,12 @@ component extends="BaseConverter" {
 				s = s & " " & a & "=" & unPound(attr[a]);
 			}
 		}
-
 		s = s & " {";
+		// close and prepend javadocs, if any
+		if (len(javaDocs)) {
+			javaDocs = javaDocs & endJavaDocs(indent = true);
+			s = javaDocs & s;
+		}
 		return s;
 	}
 

@@ -5,11 +5,11 @@ component extends="BaseConverter" {
 		var attr = tag.getAttributes();
 		
 		if (structKeyExists(attr, "hint")) {
-			s = "/" & "**" & getLineBreak() & " * " & attr.hint & getLineBreak() & " *";
+			s = startJavaDocs() & " " & attr.hint & getJavaDocsNewLine();
 		}
 		
 		if (len(s)) {
-			s = s & "/" & getLineBreak();
+			s = s & endJavaDocs();
 		}
 		s = s & "component ";
 		if (tag.hasAttributes()) {
